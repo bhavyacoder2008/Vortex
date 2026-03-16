@@ -26,11 +26,11 @@ router.post("/signup" , signupValidation , validate, async (req, res) => {
         otpExpiry : Date.now() + 5*30*1000
     });
 
-    await sendOtp(email,otp);
-
     res.json({
         message : "OTP sent successfully"
     })
+    await sendOtp(email,otp);
+
     
 
     // res.json({message : "User created successfully", newUser , loggedIn : req.user});
