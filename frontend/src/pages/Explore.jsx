@@ -37,7 +37,7 @@ const Explore = () => {
         if (value === "") {
             return;
         }
-        const res = await axios.post(`http://localhost:3000/users/searchUsers/?q=${value}`, {}, { withCredentials: true });
+        const res = await axios.post(`${import.meta.env.VITE_API_URL}/users/searchUsers/?q=${value}`, {}, { withCredentials: true });
         setResult(res.data)
         console.log(res.data)
     }

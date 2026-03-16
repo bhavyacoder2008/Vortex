@@ -71,7 +71,7 @@ const Profile = () => {
     try {
       setPosting(true)
       const res = await axios.post(
-        "http://localhost:3000/post/createPost",
+        `${import.meta.env.VITE_API_URL}/post/createPost`,
         formdata,
         { withCredentials: true },
       );
@@ -86,7 +86,7 @@ const Profile = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const res = await axios.get(`http://localhost:3000/users/profile/${id}`, {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/profile/${id}`, {
         withCredentials: true,
       });
       setIsFollowing(res.data.user.followers.includes(res.data.loggedIn));
@@ -102,7 +102,7 @@ const Profile = () => {
 
     const getPosts = async () => {
       const res = await axios.get(
-        `http://localhost:3000/post/userPosts/${id}`,
+        `${import.meta.env.VITE_API_URL}/post/userPosts/${id}`,
         {
           withCredentials: true,
         },
@@ -112,7 +112,7 @@ const Profile = () => {
     };
 
     const getLoggedInuserDetails = async () => {
-      const res = await axios.get("http://localhost:3000/users/loggedInuserDetails", { withCredentials: true });
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/loggedInuserDetails`, { withCredentials: true });
       setLoggedInUserDetails(res.data)
     }
 
@@ -124,7 +124,7 @@ const Profile = () => {
   const openFollowersModal = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3000/users/getFollowers/${id}`,
+        `${import.meta.env.VITE_API_URL}/users/getFollowers/${id}`,
         { withCredentials: true },
       );
       console.log(res.data);
@@ -138,7 +138,7 @@ const Profile = () => {
   const openFollowingModal = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:3000/users/getFollowing/${id}`,
+        `${import.meta.env.VITE_API_URL}/users/getFollowing/${id}`,
         { withCredentials: true },
       );
       setFollowingList(res.data);
@@ -152,7 +152,7 @@ const Profile = () => {
     try {
       if (!isThisPostLikedByLoggedInUser) {
         const res = await axios.post(
-          `http://localhost:3000/post/like/${displayImageId}`,
+          `${import.meta.env.VITE_API_URL}/post/like/${displayImageId}`,
           {},
           { withCredentials: true },
         );
@@ -160,7 +160,7 @@ const Profile = () => {
         console.log(res)
       }
       else {
-        const res = await axios.post(`http://localhost:3000/post/unlike/${displayImageId}`, {}, { withCredentials: true });
+        const res = await axios.post(`${import.meta.env.VITE_API_URL}/post/unlike/${displayImageId}`, {}, { withCredentials: true });
         setNumOfLikes(numOfLikes - 1);
 
       }
@@ -174,7 +174,7 @@ const Profile = () => {
     if (!comment.trim()) {
       return;
     }
-    const res = await axios.post(`http://localhost:3000/post/comment/${displayImageId}`, {
+    const res = await axios.post(`${import.meta.env.VITE_API_URL}/post/comment/${displayImageId}`, {
       text: comment
     },
       {
@@ -228,7 +228,7 @@ const Profile = () => {
                       className="px-5 py-2 bg-linear-to-r from-white to-blue-300 hover:from-indigo-400 hover:cursor-pointer hover:to-purple-500 text-[#111] rounded-xl text-sm font-bold tracking-wide transition-all duration-300 shadow-lg shadow-indigo-500/30 active:scale-95"
                       onClick={async () => {
                         const res = await axios.post(
-                          `http://localhost:3000/users/unfollow/${id}`,
+                          `${import.meta.env.VITE_API_URL}/users/unfollow/${id}`,
                           {},
                           { withCredentials: true },
                         );
@@ -243,7 +243,7 @@ const Profile = () => {
                       className="px-5 py-2 bg-linear-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:cursor-pointer hover:to-purple-500 text-white rounded-xl text-sm font-bold tracking-wide transition-all duration-300 shadow-lg shadow-indigo-500/30 active:scale-95"
                       onClick={async () => {
                         const res = await axios.post(
-                          `http://localhost:3000/users/follow/${id}`,
+                          `${import.meta.env.VITE_API_URL}/users/follow/${id}`,
                           {},
                           { withCredentials: true },
                         );
@@ -358,7 +358,7 @@ const Profile = () => {
                 className="group relative w-[80%] aspect-square bg-slate-800 rounded-2xl overflow-hidden border border-white/5 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/20 transition-all duration-300 cursor-pointer"
                 onClick={async () => {
                   const postDetails = await axios.get(
-                    `http://localhost:3000/post/singlePost/${item._id}`,
+                    `${import.meta.env.VITE_API_URL}/post/singlePost/${item._id}`,
                     { withCredentials: true },
                   );
                   setSingleImage(postDetails.data.image);

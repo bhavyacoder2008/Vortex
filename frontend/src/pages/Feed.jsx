@@ -11,12 +11,12 @@ const Feed = () => {
     const navigate = useNavigate();
     useEffect(() => {
         const getPosts = async ()=> {
-            const res = await axios.get("http://localhost:3000/users/feed" , {withCredentials : true});
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/feed` , {withCredentials : true});
             console.log(res.data)
             setPostArray(res.data.posts)
         }
         const suggestions = async () => {
-            const res = await axios.post("http://localhost:3000/users/feedUsers" , {} , {withCredentials : true});
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/users/feedUsers` , {} , {withCredentials : true});
             console.log(res.data)
             setSuggestions(res.data)
         }

@@ -7,13 +7,16 @@ const AddBio = () => {
   const [bio, setBio] = useState("");
 
   const handleclick = async () => {
-    const res = await axios.post(
-      "http://localhost:3000/users/addbio",
+    try{const res = await axios.post(
+      `${import.meta.env.VITE_API_URL}/users/addbio`,
       { bio: bio },
       { withCredentials: true }
     );
     console.log(res.data);
-    navigate(`/users/profile/${res.data.user._id}`);
+    navigate(`/users/profile/${res.data.user._id}`);}
+    catch(err){
+      console.log(err)
+    }
   };
 
   return (

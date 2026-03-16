@@ -44,7 +44,7 @@ const Otp = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        "http://localhost:3000/users/otpVerification",
+        `${import.meta.env.VITE_API_URL}/users/otpVerification`,
         { otp: otpStr, email }, { withCredentials: true }
       );
       console.log(res.data);

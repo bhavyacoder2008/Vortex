@@ -12,7 +12,7 @@ const LoginForm = () => {
   const handleClick = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/users/login", {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/users/login`, {
         email: email,
         password: password,
       }, { withCredentials: true });

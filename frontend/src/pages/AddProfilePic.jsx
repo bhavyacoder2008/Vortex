@@ -16,7 +16,7 @@ const AddProfilePic = () => {
     formdata.append("profile", profilePic);
     try {
       const res = await axios.post(
-        "http://localhost:3000/users/addProfilePic",
+        `${import.meta.env.VITE_API_URL}/users/addProfilePic`,
         formdata,
         { withCredentials: true }
       );

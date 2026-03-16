@@ -14,7 +14,7 @@ const FeedPosts = ({ feedPosts }) => {
     const details = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:3000/users/loggedInuserDetails",
+          `${import.meta.env.VITE_API_URL}/users/loggedInuserDetails`,
           { withCredentials: true },
         );
         console.log(res.data);
@@ -49,7 +49,7 @@ const FeedPosts = ({ feedPosts }) => {
       return;
     }
     const res = await axios.post(
-      `http://localhost:3000/post/comment/${displayImageId}`,
+      `${import.meta.env.VITE_API_URL}/post/comment/${displayImageId}`,
       {
         text: comment,
       },
@@ -85,7 +85,7 @@ const FeedPosts = ({ feedPosts }) => {
     try {
       if (!isThisPostLikedByLoggedInUser) {
         const res = await axios.post(
-          `http://localhost:3000/post/like/${displayImageId}`,
+          `${import.meta.env.VITE_API_URL}/post/like/${displayImageId}`,
           {},
           { withCredentials: true },
         );
@@ -93,7 +93,7 @@ const FeedPosts = ({ feedPosts }) => {
         console.log(res);
       } else {
         const res = await axios.post(
-          `http://localhost:3000/post/unlike/${displayImageId}`,
+          `${import.meta.env.VITE_API_URL}/post/unlike/${displayImageId}`,
           {},
           { withCredentials: true },
         );
@@ -115,11 +115,11 @@ const FeedPosts = ({ feedPosts }) => {
             className="group relative w-[80%] sm:w-[70%] aspect-square bg-slate-800 rounded-2xl overflow-hidden border border-white/5 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/20 transition-all cursor-pointer"
             onClick={async () => {
               const postDetails = await axios.get(
-                `http://localhost:3000/post/singlePost/${item._id}`,
+                `${import.meta.env.VITE_API_URL}/post/singlePost/${item._id}`,
                 { withCredentials: true }
               );
               const postOwnerDetails = await axios.get(
-                `http://localhost:3000/users/profile/${postDetails.data.owner}`,
+                `${import.meta.env.VITE_API_URL}/users/profile/${postDetails.data.owner}`,
                 { withCredentials: true }
               );
               setpostOwner(postOwnerDetails.data.user);

@@ -67,8 +67,8 @@ router.post("/otpVerification" , async (req,res) => {
 
     res.cookie("token" , token , {
         httpOnly : true,
-        secure : false,
-        sameSite : "strict",
+        secure : true,
+        sameSite : "none",
         maxAge : 24*60*60*1000
     })
     
@@ -106,8 +106,8 @@ router.post("/login" , loginValidation , validate , async (req,res) => {
 
     res.cookie("token" , token , {
         httpOnly : true,
-        secure : false,
-        sameSite : "strict",
+        secure : true,
+        sameSite : "none",
         maxAge : 24 * 60 * 60 * 1000
     })
     //this cookie will be stored in the browser and it will be sent to the server with every request so that we can verify the user is logged in or not

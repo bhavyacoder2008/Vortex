@@ -10,7 +10,7 @@ const NavBar = () => {
   const logOut = async () => {
     try {
       const res = await axios.post(
-        "http://localhost:3000/users/logout",
+        `${import.meta.env.VITE_API_URL}/users/logout`,
         {},
         { withCredentials: true },
       );
@@ -22,7 +22,7 @@ const NavBar = () => {
 
   useEffect(() => {
     const getLoggedinUser = async () => {
-      const res = await axios.get("http://localhost:3000/users/feed", {
+      const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/feed`, {
         withCredentials: true,
       });
       console.log(res.data.loggedInuser);
