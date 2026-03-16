@@ -34,6 +34,7 @@ router.post("/signup" , signupValidation , validate, async (req, res) => {
     res.json({
         message : "OTP sent successfully"
     })}catch(err){
+        res.json({errpr : err})
         console.log(err)
     }
 
