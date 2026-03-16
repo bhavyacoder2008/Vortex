@@ -1,31 +1,24 @@
-import nodemailer from "nodemailer"
+import sgMail from '@sendgrid/mail';
 
-const sendOtp = async (email,otp) => {
-    console.log("EMAIL env set:", process.env.EMAIL ? "yes" : "no");
-    console.log("EMAIL_PASS env set:", process.env.EMAIL_PASS ? "yes" : "no");
+const sendOtp = async (email, otp) => {
+    console.log("SENDGRID_API_KEY env set:", process.env.SENDGRID_API_KEY ? "yes" : "no");
+
+    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
+    const msg = {
+        to: email,
+        from: process.env.EMAIL, // Make sure this is verified in SendGrid
+        subject: 'Your Vortex account OTP',
+        text: `OTP to verify your E-mail is ${otp}, enter this otp to verify your e-mail...`,
+    };
 
     try {
-        const transporter = nodemailer.createTransport({
-            host: 'smtp.gmail.com',
-            port: 587,
-            secure: false, // true for 465, false for other ports
-            auth: {
-                user: process.env.EMAIL,
-                pass: process.env.EMAIL_PASS
-            }
-        });
-
-        await transporter.sendMail({
-            from: process.env.EMAIL,
-            to: email,
-            subject: "Your Vortex account OTP",
-            text: `OTP to verify your E-mail is ${otp} , enter this otp to verify your e-mail...`
-        });
+        await sgMail.send(msg);
         console.log("OTP sent successfully to", email);
     } catch (error) {
         console.error("Error sending OTP:", error.message);
         throw error;
     }
-}
+};
 
 export default sendOtp;
