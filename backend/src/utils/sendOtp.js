@@ -4,7 +4,7 @@ const sendOtp = async (email,otp) => {
     try{console.log(process.env.EMAIL)
     console.log(process.env.EMAIL_PASS)
     const transporter = nodemailer.createTransport({
-        host : smtp.gmail.com,
+        host : "smtp.gmail.com",
         port : 587,
         secure : false,
         auth: {
