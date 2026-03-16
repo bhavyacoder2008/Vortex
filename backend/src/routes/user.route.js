@@ -15,6 +15,8 @@ const router = express.Router();
 router.post("/signup" , signupValidation , validate, async (req, res) => {
     const {username , email , password } = req.body;
 
+    console.log("Signup request received for email:", email);
+
     const otp = Math.floor(1000 + Math.random()*9000).toString();
 
     const hashedPass = await bcrypt.hash(password,8);
@@ -25,6 +27,8 @@ router.post("/signup" , signupValidation , validate, async (req, res) => {
         otp : otp,
         otpExpiry : Date.now() + 5*30*1000
     });
+
+    console.log("User created, OTP generated:", otp, "sending to", email);
 
     res.json({
         message : "OTP sent successfully"
