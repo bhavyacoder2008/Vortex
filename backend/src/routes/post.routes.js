@@ -53,7 +53,7 @@ router.get("/userPosts/:id",authmiddleware , async (req,res) => {
 router.get("/singlePost/:PostId" , authmiddleware , async (req,res) => {
     const postID = req.params.PostId
     const post = await Post.findById(postID).populate("comments.owner");
-    console.log(post)
+    // console.log(post)
     res.json(post)
 })
 

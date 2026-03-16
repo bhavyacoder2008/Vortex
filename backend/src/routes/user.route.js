@@ -140,7 +140,7 @@ router.get("/profile/:id" ,authmiddleware, async (req,res) => {
 
 router.post("/addbio" , authmiddleware , async (req,res) => {
     const {bio} = req.body;
-    console.log(req.user)
+    // console.log(req.user)
     const user = await User.findById(req.user);
     user.bio = bio;
     await user.save();
@@ -176,7 +176,7 @@ router.post("/addProfilePic" , authmiddleware , upload.single("profile") , async
             updatedUser
         });
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         res.status(400).json({
             message: error.message || "Failed to upload profile picture"
         });
@@ -241,7 +241,7 @@ router.get("/getFollowing/:id" , authmiddleware , async (req,res) => {
 router.get("/loggedInuserDetails" , authmiddleware , async(req,res) => {
     const id = req.user;
     const details = await User.findById(id);
-    console.log(details)
+    // console.log(details)
     res.json(details)
 })
 
@@ -250,9 +250,9 @@ router.get("/feed" , authmiddleware , async (req,res) => {
     // let posts = [];
     try{
         const followingObject = await User.findById(id).select("following"); //aalsi waY of doing .following lol
-        console.log(followingObject)
+        // console.log(followingObject)
         if(!followingObject){
-            console.log("Following object not found")
+            // console.log("Following object not found")
         }
 
         const followingList = followingObject.following
@@ -261,11 +261,11 @@ router.get("/feed" , authmiddleware , async (req,res) => {
         }).populate("owner")
         .sort({createdAt : -1})
         .limit(20)
-        console.log(posts)
+        // console.log(posts)
         res.json({posts , loggedInuser : req.user})
 
         }catch(err){
-            console.log(err)
+            // console.log(err)
      }
 
 
@@ -274,7 +274,7 @@ router.get("/feed" , authmiddleware , async (req,res) => {
 router.get("/getDetailswithPostID/:id" , authmiddleware , async (req,res) => {
     const post = await Post.findById(req.params.id).populate("owner");
     const owner = post.owner;
-    console.log(owner);
+    // console.log(owner);
     res.json({owner , loggedInId : req.user})
 });
 
@@ -305,7 +305,7 @@ router.post("/feedUsers" , authmiddleware , async (req,res) => {
         res.json(usersToshow);
 
     }catch(err){
-        console.log(err)
+        // console.log(err)
     }
     
 
