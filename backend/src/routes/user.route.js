@@ -13,7 +13,7 @@ import sendOtp from "../utils/sendOtp.js";
 const router = express.Router();
 
 router.post("/signup" , signupValidation , validate, async (req, res) => {
-    const {username , email , password } = req.body;
+    try{const {username , email , password } = req.body;
 
     console.log("Signup request received for email:", email);
 
@@ -33,7 +33,9 @@ router.post("/signup" , signupValidation , validate, async (req, res) => {
     await sendOtp(email,otp);
     res.json({
         message : "OTP sent successfully"
-    })
+    })}catch(err){
+        console.log(err)
+    }
 
     
 
