@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@keyframes popup{ /* Defining name of the popup */
+    0%{
+        scale: 0.3;
+        opacity: 0;
+    }
+
+    100%{
+        scale: 1;
+        opacity: 1;
+    }
+}
+
+/* above i have defined an animation names popup hehehe */
+
+.animate-popup{
+    animation: popup .4s ease-in forwards; /* forwards ka matlab hai ki last mein jab animation 100% ho jaaye tab wo aisa hi rhe  */
+}
+
+@keyframes ham{
+    0%{
+        scale : 0;
+        opacity: 0
+    }
+    50%{
+        scale: 0.3;
+        opacity: 0.3;
+    }
+    75%{
+        scale: 0.8;
+        opacity: 0.8;
+    }
+    100%{
+        scale: 1;
+        opacity: 1;
+    }
+}
+
+.animate-ham{
+    animation : ham .3s ease-in-out forwards;
+}
