@@ -148,12 +148,13 @@ router.get("/profile/:id" ,authmiddleware, async (req,res) => {
 router.post("/addbio" , authmiddleware , async (req,res) => {
     const {bio} = req.body;
     // console.log(req.user)
+    const user = await User.findById(req.user);
     if(!bio){
         return res.json({
-            message : "No bio added"
+            message : "No bio added",
+            user : user
         })
     }
-    const user = await User.findById(req.user);
     user.bio = bio;
     await user.save();
     res.json({
