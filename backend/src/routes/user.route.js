@@ -30,10 +30,10 @@ router.post("/signup" , signupValidation , validate, async (req, res) => {
 
     console.log("User created, OTP generated:", otp, "sending to", email);
 
+    await sendOtp(email,otp);
     res.json({
         message : "OTP sent successfully"
     })
-    await sendOtp(email,otp);
 
     
 
