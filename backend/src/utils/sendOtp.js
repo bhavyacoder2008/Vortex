@@ -13,8 +13,8 @@ const sendOtp = async (email, otp) => {
     };
 
     try {
-        await sgMail.send(msg);
-        console.log("OTP sent successfully to", email);
+        const result = await sgMail.send(msg);
+        console.log("OTP sent successfully to", email, "SendGrid response:", result);
     } catch (error) {
         console.error("Error sending OTP:", error.message);
         throw error;
