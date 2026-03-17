@@ -24,7 +24,7 @@ const LoginForm = () => {
       navigate(`/users/profile/${res.data.user._id}`);
     } catch (err) {
       const errorArray = await err.response.data.errors;
-      setLoggingIn(true)
+      setLoggingIn(false)
       console.log(errorArray);
       if (errorArray) {
         setErrors({});
