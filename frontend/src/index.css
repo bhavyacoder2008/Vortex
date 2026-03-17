@@ -40,3 +40,7 @@
 .animate-ham{
     animation : ham .3s ease-in-out forwards;
 }
+
+.text-center{
+    text-align: center;
+}
