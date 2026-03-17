@@ -7,11 +7,13 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [isUser, setisUser] = useState(true);
+  const [logginIn , setLoggingIn] = useState(false)
   const navigate = useNavigate();
 
   const handleClick = async (e) => {
     e.preventDefault();
     try {
+      setLoggingIn(true)
       const res = await axios.post(`${import.meta.env.VITE_API_URL}/users/login`, {
         email: email,
         password: password,
@@ -22,6 +24,7 @@ const LoginForm = () => {
       navigate(`/users/profile/${res.data.user._id}`);
     } catch (err) {
       const errorArray = await err.response.data.errors;
+      setLoggingIn(true)
       console.log(errorArray);
       if (errorArray) {
         setErrors({});
@@ -123,12 +126,13 @@ const LoginForm = () => {
             )}
 
             {/* Submit */}
-            <button
+            {logginIn ? (<div className="w-full bg-white hover:bg-zinc-100 active:bg-zinc-200 text-black font-semibold text-sm py-3.5 rounded-xl transition-colors duration-150 mt-1 tracking-wide"></div>) : 
+            (<button
               type="submit"
-              className="w-full bg-white hover:bg-zinc-100 active:bg-zinc-200 text-black font-semibold text-sm py-3.5 rounded-xl transition-colors duration-150 mt-1 tracking-wide"
+              className="w-full bg-white hover:bg-zinc-100 active:bg-zinc-200 text-black font-semibold text-sm py-3.5 rounded-xl transition-colors cursor-progress mt-1 tracking-wide"
             >
               Log in →
-            </button>
+            </button>)}
 
           </form>
 
