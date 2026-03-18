@@ -37,6 +37,6 @@ Users can create accounts, log in securely, upload posts, and interact with cont
 
 ### Deployment
 - Vercel (Frontend)
-- Cloud-hosted Node/Express server
+- Render
 
 ---
