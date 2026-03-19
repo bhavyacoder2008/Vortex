@@ -153,7 +153,8 @@ router.get("/profile/:id" ,authmiddleware, async (req,res) => {
 
     res.json({
         user : user,
-        loggedIn : req.user
+        loggedIn : req.user,
+        isGuest : req.isGuest
     })
 })
 //no need of the below route now because we are sending the user id in the response of /profile route and we can use that id to fetch the user info in the frontend
