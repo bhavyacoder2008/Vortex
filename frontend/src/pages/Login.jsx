@@ -126,7 +126,7 @@ const LoginForm = () => {
             )}
 
             {/* Submit */}
-            {logginIn ? (<div className="w-full bg-white hover:bg-zinc-100 active:bg-zinc-200 text-black font-semibold text-sm py-3.5 rounded-xl cursor-progrestransition-colors duration-150 mt-1 tracking-wide">Logging</div>) : 
+            {logginIn ? (<div className="w-full bg-white hover:bg-zinc-100 active:bg-zinc-200 text-black font-semibold text-sm py-3.5 rounded-xl cursor-progres text-center transition-colors duration-150 mt-1 tracking-wide">Logging</div>) : 
             (<button
               type="submit"
               className="w-full bg-white hover:bg-zinc-100 active:bg-zinc-200 text-black font-semibold text-sm py-3.5 rounded-xl transition-colors mt-1 tracking-wide"
