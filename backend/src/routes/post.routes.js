@@ -8,6 +8,9 @@ import User from "../models/user.model.js"
 const router = express.Router();
 
 router.post("/createPost" , authmiddleware ,upload.single("image"), async (req,res) => {
+    if(req.isGuest){
+        return res.json({message : "You are a guest lol"})
+    }
 
     const file = req.file;
     const {caption} = req.body;
@@ -58,6 +61,10 @@ router.get("/singlePost/:PostId" , authmiddleware , async (req,res) => {
 })
 
 router.post("/like/:id" , authmiddleware , async (req,res) => {
+
+    if(req.isGuest){
+        return res.json({message : "You are a guest lol"})
+    }
     const postId = req.params.id;
     const likedUserId = req.user;
 
@@ -71,6 +78,10 @@ router.post("/like/:id" , authmiddleware , async (req,res) => {
 })
 
 router.post("/unlike/:id" , authmiddleware , async (req,res) => {
+
+    if(req.isGuest){
+        return res.json({message : "You are a guest lol"})
+    }
     const postId = req.params.id;
     const unLikingUserId = req.user;
 
@@ -82,6 +93,11 @@ router.post("/unlike/:id" , authmiddleware , async (req,res) => {
 })
 
 router.post("/comment/:id" , authmiddleware , async (req,res) => {
+
+    if(req.isGuest){
+        return res.json({message : "You are a guest lol"})
+    }
+    
     const postId = req.params.id;
     const commentingUserId = req.user;
     const {text} = req.body;

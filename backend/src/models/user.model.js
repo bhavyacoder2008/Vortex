@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    username : String,
-    email : String,
-    password : String,
+    username : {type : String, default : null},
+    email : {type : String, default : null},
+    password : {type : String, default : null},
     profilePic : {
         type : String,
         default : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
@@ -33,9 +33,17 @@ const userSchema = new mongoose.Schema({
     },
     otp : {
         type : String,
+        default : null
     },
     otpExpiry : {
-        type : Date
+        type : Date,
+        default : null
+
+    },
+
+    isGuest : {
+        type : Boolean,
+        default : false
     }
 
     

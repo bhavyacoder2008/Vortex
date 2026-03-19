@@ -22,11 +22,14 @@ const NavBar = () => {
 
   useEffect(() => {
     const getLoggedinUser = async () => {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/feed`, {
+      try{const res = await axios.get(`${import.meta.env.VITE_API_URL}/users/feed`, {
         withCredentials: true,
       });
       console.log(res.data.loggedInuser);
       setLoggedIn(res.data.loggedInuser);
+    }catch(err){
+      console.log(err)
+    }
     };
     getLoggedinUser();
   }, []);

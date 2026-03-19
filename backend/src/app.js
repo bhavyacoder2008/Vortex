@@ -8,7 +8,7 @@ import cors from "cors"
 const app = express();
 
 app.use(cors({
-    origin : "https://vortex-blue-eight.vercel.app",
+    origin : "http://localhost:5173",
     credentials : true
 }))
 app.use(express.json());
@@ -16,6 +16,10 @@ app.use(cookieParser());
 
 app.use("/users" , userRouter)
 app.use("/post" , postRouter)
+
+app.get("/",(req,res) => {
+    res.send("hehehe")
+})
 
 
 

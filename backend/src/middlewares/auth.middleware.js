@@ -10,6 +10,7 @@ const authmiddleware = (req,res,next) => {
     const decoded = jwt.verify(token , process.env.JWT_SECRET) //decoded mein payload aayega jisme user ka id hoga
 
     req.user = decoded.id;
+    req.isGuest = decoded.isGuest
 
     // res.status(200).json({
     //     message : "The user is logged In aane do ussko "
