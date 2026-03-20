@@ -163,7 +163,7 @@ const Signup = () => {
               Create Account →
             </button>)}
           </form>
-          {continuing ? <div className="w-full bg-[#232323] mt-4 text-center  text-gray font-semibold text-sm cursor-pointer py-3.5 rounded-xl  mt-1 tracking-wide hover:scale-95 ">Continuing</div>: <div className="w-full bg-[#232323] mt-4 text-center  text-gray font-semibold text-sm cursor-pointer py-3.5 rounded-xl  mt-1 tracking-wide hover:scale-95" onClick={createGuest}>Continue as Guest</div>}
+          {continuing ? <div className="sm:w-[450px] bg-[#232323] mt-4 text-center  text-gray font-semibold text-sm cursor-pointer py-3.5 rounded-xl  mt-1 tracking-wide hover:scale-95 ">Continuing</div>: <div className=" bg-[#232323] mt-4 text-center  text-gray font-semibold text-sm cursor-pointer py-3.5 rounded-xl  mt-1 tracking-wide hover:scale-95 sm:w-[450px]" onClick={createGuest}>Continue as Guest</div>}
 
           {/* Login link */}
           <div className="mt-10 pt-8 border-t border-white/10 w-full max-w-md">

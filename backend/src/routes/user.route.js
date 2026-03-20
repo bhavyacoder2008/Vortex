@@ -306,7 +306,7 @@ router.get("/feed" , authmiddleware , async (req,res) => {
         .sort({createdAt : -1})
         .limit(20)
         // console.log(posts)
-        res.json({posts , loggedInuser : req.user})
+        res.json({posts , loggedInuser : req.user , isGuest : req.isGuest})
 
         }catch(err){
             // console.log(err)
@@ -349,7 +349,11 @@ router.post("/searchUsers" , authmiddleware ,  async (req,res) => {
 
 router.post("/feedUsers" , authmiddleware , async (req,res) => {
     try{
-        const usersToshow = await User.find().sort({createdAt : -1}).limit(20);
+        const usersToshow = (await User.find().sort({createdAt : -1}).limit(20)).filter((users) => {
+            if(users.username){
+                return users
+            }
+        });
         res.json(usersToshow);
 
     }catch(err){

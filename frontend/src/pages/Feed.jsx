@@ -31,10 +31,10 @@ const Feed = () => {
   {
     suggestions.map((val, i) => {
       return (
-        <div className="max-w-[100px] max-h-[100px] sm:max-h-[200px] sm:max-w-[200px] w-fit shrink-0 bg-gradient-to-b from-purple-500 to-pink-500 text-white max-h-50 p-4 rounded-2xl shadow-lg hover:scale-105 transition-transform duration-200 cursor-pointer"
+        <div className="max-w-[100px] max-h-[100px] sm:max-h-[200px] hide-scrollbar sm:max-w-[200px] w-fit shrink-0 bg-gradient-to-b from-purple-500 to-pink-500 text-white max-h-50 p-4 rounded-2xl shadow-lg hover:scale-105 transition-transform duration-200 cursor-pointer"
          onClick={() => navigate(`/users/profile/${val._id}`)}
         >
-          <div className="rounded-3xl w-[80%] h-[50%] flex justify-center">
+          <div className="rounded-3xl w-[80%] h-[50%] flex justify-center hide-scrollbar">
             <img src={val.profilePic} alt="" className="w-full h-full overflow-hidden rounded-4xl ring-2 ring-white/40" />
           </div>
           <div className="sm:text-lg text-xs sm:mt-4 mt-2 text-[#ebffcb]">@{val.username}</div>

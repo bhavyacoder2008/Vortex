@@ -38,6 +38,7 @@ const Profile = () => {
   const [loggedInuserdetails, setLoggedInUserDetails] = useState({});
   const [posting , setPosting] = useState(false)
   const [isGuest,setIsguest] = useState(false)
+  const [loading , setLoading] = useState(true)
 
   function formatInstaTime(val) {
     const past = new Date(val);
@@ -100,6 +101,7 @@ const Profile = () => {
       setTotalPosts(res.data.user.posts.length);
       setLoggedInUserId(res.data.loggedIn);
       setIsguest(res.data.isGuest)
+      setLoading(false)
     };
 
     const getPosts = async () => {
@@ -189,6 +191,7 @@ const Profile = () => {
 
   return (
     <>
+    
       <div className="min-h-screen w-full bg-slate-950 text-slate-50 font-sans selection:bg-indigo-500/30 overflow-x-hidden">
         {/* ── Navbar ── */}
 
@@ -490,7 +493,7 @@ const Profile = () => {
                   </div>
 
                   {/* Actions */}
-                  <div className="border-t border-white/[0.08] px-4 py-3 shrink-0 bg-slate-900">
+                  {isGuest ? <div></div>: <div className="border-t border-white/[0.08] px-4 py-3 shrink-0 bg-slate-900">
                     <div className="flex items-center gap-4 mb-2">
                       {isThisPostLikedByLoggedInUser ? (
                         <button className="group cursor-pointer" onClick={handleLike}>
@@ -532,7 +535,7 @@ const Profile = () => {
                         Post
                       </button>
                     </div>
-                  </div>
+                  </div>}
 
                 </div>
               </div>
