@@ -8,7 +8,7 @@ import cors from "cors"
 const app = express();
 
 app.use(cors({
-    origin : "https://vortex-blue-eight.vercel.app",
+    origin : "https://vortex-blue-eight.vercel.app/",
     credentials : true
 }))
 app.use(express.json());
