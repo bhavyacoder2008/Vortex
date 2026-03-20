@@ -43,6 +43,28 @@ router.post("/signup" , signupValidation , validate, async (req, res) => {
     // res.json({message : "User created successfully", newUser , loggedIn : req.user});
 })
 
+router.post("/createGuest" , async (req,res) => {
+    const guest = await User.create({
+        isGuest : true,
+        isVerified : true
+    })
+    const token = jwt.sign({
+        id : guest._id,
+        isGuest : true
+    },process.env.JWT_SECRET ,{
+        expiresIn : "1d"
+    })
+
+    res.cookie("token", token,{
+        httpOnly : true,
+        secure : false,
+        sameSite : "lax",
+        maxAge : 24*60*60*1000
+    })
+
+    res.json({message : "User created successfully"})
+})
+
 router.post("/otpVerification" , async (req,res) => {
     const {email , otp} = req.body;
 
@@ -62,7 +84,7 @@ router.post("/otpVerification" , async (req,res) => {
 
     
     const token = jwt.sign({
-        id : user._id
+        id : user._id,
     },process.env.JWT_SECRET,{expiresIn : "1d"});
 
     res.cookie("token" , token , {
@@ -131,7 +153,8 @@ router.get("/profile/:id" ,authmiddleware, async (req,res) => {
 
     res.json({
         user : user,
-        loggedIn : req.user
+        loggedIn : req.user,
+        isGuest : req.isGuest
     })
 })
 //no need of the below route now because we are sending the user id in the response of /profile route and we can use that id to fetch the user info in the frontend
@@ -200,13 +223,17 @@ router.post("/addProfilePic" , authmiddleware , upload.single("profile") , async
 //in both follow case i will follow the approad ki ham jis user ko follow kiya hai uski id bhejein
 
 router.post("/follow/:id" , authmiddleware , async (req,res) => {
+
+    if(req.isGuest){
+        return res.json({message : "You are a guest lol"})
+    }
     const userBeingFollowedId = req.params.id;
     //req.user ke andar uski id hogi jo login kar rakha hai yaani jis account se follow kiya hai
     const UserFollowingId = req.user;
     const userBeingFollowed = await User.findByIdAndUpdate(userBeingFollowedId , {
         $push : {followers : UserFollowingId}
     } , {new : true});
-    const UserFollowing = await User.findByIdAndUpdate(UserFollowingId , {
+    await User.findByIdAndUpdate(UserFollowingId , {
         $push : {following : userBeingFollowedId}
     })
 
@@ -218,6 +245,10 @@ router.post("/follow/:id" , authmiddleware , async (req,res) => {
 
 
 router.post("/unfollow/:id" , authmiddleware , async (req,res) => {
+
+    if(req.isGuest){
+        return res.json({message : "You are a guest lol"})
+    }
     const userBeingUnFollowedId = req.params.id; //ye hai jiski profile mein ham currently hain
     //req.user ke andar uski id hogi jo login kar rakha hai yaani jis account se follow kiya hai
     const UserUnFollowingId = req.user;
@@ -275,7 +306,7 @@ router.get("/feed" , authmiddleware , async (req,res) => {
         .sort({createdAt : -1})
         .limit(20)
         // console.log(posts)
-        res.json({posts , loggedInuser : req.user})
+        res.json({posts , loggedInuser : req.user , isGuest : req.isGuest})
 
         }catch(err){
             // console.log(err)
@@ -292,6 +323,10 @@ router.get("/getDetailswithPostID/:id" , authmiddleware , async (req,res) => {
 });
 
 router.post("/logout" , authmiddleware , (req,res) => {
+
+    if(req.isGuest){
+        return res.json({message : "You are a guest lol"})
+    }
 
     res.clearCookie("token",{
         httpOnly : true,
@@ -314,7 +349,11 @@ router.post("/searchUsers" , authmiddleware ,  async (req,res) => {
 
 router.post("/feedUsers" , authmiddleware , async (req,res) => {
     try{
-        const usersToshow = await User.find().sort({createdAt : -1}).limit(20);
+        const usersToshow = (await User.find().sort({createdAt : -1}).limit(20)).filter((users) => {
+            if(users.username){
+                return users
+            }
+        });
         res.json(usersToshow);
 
     }catch(err){

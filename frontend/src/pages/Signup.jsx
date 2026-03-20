@@ -10,6 +10,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [sigining , setSigning] = useState(false)
+  const [continuing , setContinuing] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,6 +41,18 @@ const Signup = () => {
       console.log(err.response.data.errors[0].msg);
     }
   };
+
+  const createGuest = async () => {
+    setContinuing(true)
+    try{
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/users/createGuest`, {} , {withCredentials : true});
+      console.log(res.data)
+      navigate(`/users/profile/69b8672a392ea1e15e96be63`)
+    }catch(err){
+      console.log(err)
+    }
+    setContinuing(false)
+  }
 
   return (
     <div className="min-h-screen w-full bg-[#0f0f0f] text-white flex flex-col overflow-hidden ">
@@ -150,6 +163,7 @@ const Signup = () => {
               Create Account →
             </button>)}
           </form>
+          {continuing ? <div className="sm:w-[450px] bg-[#232323] mt-4 text-center  text-gray font-semibold text-sm cursor-pointer py-3.5 rounded-xl  mt-1 tracking-wide hover:scale-95 ">Continuing</div>: <div className=" bg-[#232323] mt-4 text-center  text-gray font-semibold text-sm cursor-pointer py-3.5 rounded-xl  mt-1 tracking-wide hover:scale-95 sm:w-[450px]" onClick={createGuest}>Continue as Guest</div>}
 
           {/* Login link */}
           <div className="mt-10 pt-8 border-t border-white/10 w-full max-w-md">

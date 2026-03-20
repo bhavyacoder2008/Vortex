@@ -17,6 +17,10 @@ app.use(cookieParser());
 app.use("/users" , userRouter)
 app.use("/post" , postRouter)
 
+app.get("/",(req,res) => {
+    res.send("hehehe")
+})
+
 
 
 export default app;

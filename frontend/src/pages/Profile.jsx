@@ -37,6 +37,8 @@ const Profile = () => {
   const [displayComments, setDisplayComments] = useState([]);
   const [loggedInuserdetails, setLoggedInUserDetails] = useState({});
   const [posting , setPosting] = useState(false)
+  const [isGuest,setIsguest] = useState(false)
+  const [loading , setLoading] = useState(true)
 
   function formatInstaTime(val) {
     const past = new Date(val);
@@ -98,6 +100,8 @@ const Profile = () => {
       setFollowing(res.data.user.following.length);
       setTotalPosts(res.data.user.posts.length);
       setLoggedInUserId(res.data.loggedIn);
+      setIsguest(res.data.isGuest)
+      setLoading(false)
     };
 
     const getPosts = async () => {
@@ -187,6 +191,7 @@ const Profile = () => {
 
   return (
     <>
+    
       <div className="min-h-screen w-full bg-slate-950 text-slate-50 font-sans selection:bg-indigo-500/30 overflow-x-hidden">
         {/* ── Navbar ── */}
 
@@ -223,37 +228,40 @@ const Profile = () => {
                   <h2 className="text-3xl font-extrabold text-white tracking-tight drop-shadow-sm">
                     {username}
                   </h2>
-                  {isFollowing ? (
-                    <button
-                      className="px-5 py-2 bg-linear-to-r from-white to-blue-300 hover:from-indigo-400 hover:cursor-pointer hover:to-purple-500 text-[#111] rounded-xl text-sm font-bold tracking-wide transition-all duration-300 shadow-lg shadow-indigo-500/30 active:scale-95"
-                      onClick={async () => {
-                        const res = await axios.post(
-                          `${import.meta.env.VITE_API_URL}/users/unfollow/${id}`,
-                          {},
-                          { withCredentials: true },
-                        );
-                        setFollowers(res.data.updatedFollowers);
-                        setIsFollowing(false);
-                      }}
-                    >
-                      Unfollow
-                    </button>
-                  ) : (
-                    <button
-                      className="px-5 py-2 bg-linear-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:cursor-pointer hover:to-purple-500 text-white rounded-xl text-sm font-bold tracking-wide transition-all duration-300 shadow-lg shadow-indigo-500/30 active:scale-95"
-                      onClick={async () => {
-                        const res = await axios.post(
-                          `${import.meta.env.VITE_API_URL}/users/follow/${id}`,
-                          {},
-                          { withCredentials: true },
-                        );
-                        setFollowers(res.data.updatedFollowers);
-                        setIsFollowing(true);
-                      }}
-                    >
-                      Follow
-                    </button>
-                  )}
+                  {isGuest ? (<div></div>) : 
+                    (isFollowing ? (
+                      <button
+                        className="px-5 py-2 bg-linear-to-r from-white to-blue-300 hover:from-indigo-400 hover:cursor-pointer hover:to-purple-500 text-[#111] rounded-xl text-sm font-bold tracking-wide transition-all duration-300 shadow-lg shadow-indigo-500/30 active:scale-95"
+                        onClick={async () => {
+                          const res = await axios.post(
+                            `${import.meta.env.VITE_API_URL}/users/unfollow/${id}`,
+                            {},
+                            { withCredentials: true },
+                          );
+                          setFollowers(res.data.updatedFollowers);
+                          setIsFollowing(false);
+                        }}
+                      >
+                        Unfollow
+                      </button>
+                    ) : (
+                      <button
+                        className="px-5 py-2 bg-linear-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:cursor-pointer hover:to-purple-500 text-white rounded-xl text-sm font-bold tracking-wide transition-all duration-300 shadow-lg shadow-indigo-500/30 active:scale-95"
+                        onClick={async () => {
+                          const res = await axios.post(
+                            `${import.meta.env.VITE_API_URL}/users/follow/${id}`,
+                            {},
+                            { withCredentials: true },
+                          );
+                          setFollowers(res.data.updatedFollowers);
+                          setIsFollowing(true);
+                        }}
+                      >
+                        Follow
+                      </button>
+                    ))
+                  }
+
                 </div>
               ) : (
                 <div className="flex flex-wrap items-center gap-3 justify-center sm:justify-start">
@@ -485,7 +493,7 @@ const Profile = () => {
                   </div>
 
                   {/* Actions */}
-                  <div className="border-t border-white/[0.08] px-4 py-3 shrink-0 bg-slate-900">
+                  {isGuest ? <div></div>: <div className="border-t border-white/[0.08] px-4 py-3 shrink-0 bg-slate-900">
                     <div className="flex items-center gap-4 mb-2">
                       {isThisPostLikedByLoggedInUser ? (
                         <button className="group cursor-pointer" onClick={handleLike}>
@@ -527,7 +535,7 @@ const Profile = () => {
                         Post
                       </button>
                     </div>
-                  </div>
+                  </div>}
 
                 </div>
               </div>
