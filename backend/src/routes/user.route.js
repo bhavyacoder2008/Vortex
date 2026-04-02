@@ -9,6 +9,7 @@ import authmiddleware from "../middlewares/auth.middleware.js";
 import upload from "../middlewares/multer.js";
 import imagekit from "../config/imagekit.js";
 import sendOtp from "../utils/sendOtp.js";
+import {body} from "express-validator"
 
 const router = express.Router();
 
@@ -363,4 +364,32 @@ router.post("/feedUsers" , authmiddleware , async (req,res) => {
 
 })
 
+router.post("/forgotPass" , async(req,res) => {
+
+    const {username , email} = req.body;
+    const emailReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+
+    const isEmail = emailReg.test(email.toLowerCase());
+
+    if(!isEmail){
+        return res.status(400).json({
+            message: "invalid E-mail",
+            sendOTP: false
+        })
+    }
+
+    const user = await User.findOne({username: username , email: email});
+    if(!user){
+        return res.status(400).json({
+            message: "invalid username or e-mail",
+            sendOTP: false
+        })
+    }else{
+        return res.status(200).json({
+            message: "Valid User",
+            sendOTP: true
+        })
+    }
+
+})
 export default router;
