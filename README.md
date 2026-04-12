@@ -13,7 +13,8 @@ Users can create accounts, log in securely, upload posts, and interact with cont
 - Secure password hashing
 - Create and view posts
 - Image-based feed
-- Like functionality
+- Like Other people's post
+- comment on posts
 - Protected routes
 - Responsive UI
 
